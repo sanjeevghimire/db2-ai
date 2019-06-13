@@ -1,0 +1,133 @@
+<div class="row">
+  <div class="col-sm-6">
+    <h2>Flight Information</h2>
+    <div>
+      <form (ngSubmit)="onSubmit()" #predictionForm="ngForm">
+        <div class="form-group">
+          <label for="opCarrier" class="control-label">Carrier</label>
+          <input type="text" required [(ngModel)]="model.opCarrier" #opCarrier="ngModel" class="form-control"
+            id="opCarrier" name="opCarrier" placeholder="DL">
+          <div [hidden]="opCarrier.valid || opCarrier.pristine" class="alert alert-danger">
+            Op Carrier is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tailNum" class="control-label">Tail Number</label>
+          <input type="text" required [(ngModel)]="model.tailNum" #tailNum="ngModel" class="form-control" id="tailNum"
+            name="tailNum" placeholder="N717TW">
+          <div [hidden]="tailNum.valid || tailNum.pristine" class="alert alert-danger">
+            Tail number is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="manufacturer" class="control-label">Manufacturer</label>
+          <input type="text" required [(ngModel)]="model.manufacturer" #manufacturer="ngModel" class="form-control"
+            id="manufacturer" name="manufacturer" placeholder="Boeing">
+          <div [hidden]="manufacturer.valid || manufacturer.pristine" class="alert alert-danger">
+            Manufacturer is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="flightModel" class="control-label">Model</label>
+          <input type="text" required [(ngModel)]="model.flightModel" #flightModel="ngModel" class="form-control"
+            id="model" name="flightModel" placeholder="B757-2">
+          <div [hidden]="flightModel.valid || flightModel.pristine" class="alert alert-danger">
+            Model is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Origin" class="control-label">Origin</label>
+          <input type="text" required [(ngModel)]="model.origin" #origin="ngModel" class="form-control" id="origin"
+            name="origin" placeholder="BOS">
+          <div [hidden]="origin.valid || origin.pristine" class="alert alert-danger">
+            Origin is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="originCityName" class="control-label">Origin City Name</label>
+          <input type="text" required [(ngModel)]="model.originCityName" #originCityName="ngModel" class="form-control"
+            id="originCityName" name="originCityName" placeholder="Boston, MA">
+          <div [hidden]="originCityName.valid || originCityName.pristine" class="alert alert-danger">
+            Origin city name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dest" class="control-label">Destination</label>
+          <input type="text" required [(ngModel)]="model.dest" #dest="ngModel" class="form-control" id="dest"
+            name="dest" placeholder="SFO">
+          <div [hidden]="dest.valid || dest.pristine" class="alert alert-danger">
+            Destination is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="destinationCityName" class="control-label">Destination City Name</label>
+          <input type="text" required [(ngModel)]="model.destinationCityName" #destinationCityName="ngModel"
+            class="form-control" id="destinationCityName" name="destinationCityName" placeholder="San Fransisco, CA">
+          <div [hidden]="destinationCityName.valid || destinationCityName.pristine" class="alert alert-danger">
+            Destination city name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="month" class="control-label">Month</label>
+          <select class="form-control" id="month" name="month" required [(ngModel)]="model.month" #month="ngModel">
+            <option [ngValue]="mnth.code" *ngFor="let mnth of months">{{mnth.name}}</option>
+          </select>
+          <div [hidden]="month.valid || month.pristine" class="alert alert-danger">
+            Destination city name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dayOfWeek" class="control-label">Day of Week</label>
+          <select class="form-control" id="dayOfWeek" name="dayOfWeek" required [(ngModel)]="model.dayOfWeek"
+            #dayOfWeek="ngModel">
+            <option [ngValue]="day.code" *ngFor="let day of dayOfWeeks">{{day.name}}</option>
+          </select>
+
+          <div [hidden]="dayOfWeek.valid || dayOfWeek.pristine" class="alert alert-danger">
+            Day of week is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="depTimeBlk" class="control-label">Departure Time Block</label>
+          <input type="text" required [(ngModel)]="model.depTimeBlk" #depTimeBlk="ngModel" class="form-control"
+            id="depTimeBlk" name="depTimeBlk" placeholder="1600-1659">
+          <div [hidden]="depTimeBlk.valid || depTimeBlk.pristine" class="alert alert-danger">
+            Departure time block is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Predict</button>&nbsp;&nbsp;
+          <!-- <button type="submit" class="btn btn-primary" [disabled]="!predictionForm.form.valid">Predict</button>&nbsp;&nbsp; -->
+          <button type="button" class="btn btn-primary" (click)="newFlightInfo(); predictionForm.reset()">Reset</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <h2>Prediction Result</h2>
+    <table *ngIf="predictionForm.submitted" class="table">
+      <thead class="thead-dark">
+        <th scope="col">#</th>
+        <th scope="col">Source Delay</th>
+        <th scope="col">Prediction</th>
+      </thead>      
+      <tr *ngFor= "let prediction of predictions">
+        <td>{{prediction.ID}}</td>
+        <td>{{prediction.SOURCE_DELAY}}</td>
+        <td>{{prediction.SOURCE_PREDICT}}</td>
+      </tr>    
+    </table>    
+  </div>
+</div>
